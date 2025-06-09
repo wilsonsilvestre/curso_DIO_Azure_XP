@@ -1,0 +1,77 @@
+def identificar_bandeira(numero_cartao):
+    """
+    Identifica a bandeira de um cartão de crédito com base nos primeiros dígitos.
+
+    Args:
+        numero_cartao (str): O número do cartão de crédito (apenas dígitos).
+
+    Returns:
+        str: A bandeira do cartão (Visa, MasterCard, American Express, Diners Club, Discover)
+             ou 'Desconhecida' se não for identificada.
+    """
+    # Remove espaços ou hífens que o usuário possa ter digitado
+    numero_cartao = numero_cartao.replace(" ", "").replace("-", "")
+
+    # Validação básica do comprimento (apenas para exemplo, não é uma validação completa)
+    if not (13 <= len(numero_cartao) <= 19):
+        return "Número de cartão inválido (comprimento)."
+    
+    # Validação básica se contém apenas dígitos
+    if not numero_cartao.isdigit():
+        return "Número de cartão inválido (contém caracteres não numéricos)."
+
+    # Regras de identificação
+    if numero_cartao.startswith('4'):
+        return "Visa"
+    elif numero_cartao.startswith(('51', '52', '53', '54', '55')):
+        return "MasterCard"
+    elif numero_cartao.startswith(('34', '37')):
+        return "American Express"
+    elif numero_cartao.startswith(('300', '301', '302', '303', '304', '305', '36', '38')):
+        return "Diners Club"
+    elif numero_cartao.startswith(('6011', '644', '645', '646', '647', '648', '649', '65')):
+        return "Discover"
+    else:
+        return "Bandeira Desconhecida"
+
+def main():
+    print("--- Identificador de Bandeira de Cartão de Crédito ---")
+    numero_input = input("Digite o número do cartão de crédito: ")
+    
+    bandeira = identificar_bandeira(numero_input)
+    print(f"A bandeira do cartão é: {bandeira}")
+
+if __name__ == "__main__":
+    main()
+
+# Geração do arquivo README.md
+readme_content = """
+# Identificador de Bandeira de Cartão de Crédito
+
+Este é um aplicativo Python simples projetado para identificar a bandeira de um cartão de crédito com base nos primeiros dígitos do número do cartão.
+
+## Como Funciona
+
+O programa solicita ao usuário que insira um número de cartão de crédito. Ele então utiliza um conjunto de regras predefinidas (baseadas nos prefixos de identificação do emissor - IIN/BIN) para determinar a bandeira do cartão, como Visa, MasterCard, American Express, etc.
+
+**Importante:** Este é um projeto de demonstração e as regras de identificação são simplificadas. Em um ambiente de produção real, a validação e identificação de cartões de crédito são muito mais complexas e envolvem algoritmos como o Luhn, além de bancos de dados de BINs atualizados.
+
+## Bandeiras Suportadas (com base nas regras simplificadas)
+
+* **Visa:** Começa com `4`
+* **MasterCard:** Começa com `51` a `55`
+* **American Express:** Começa com `34` ou `37`
+* **Diners Club:** Começa com `300` a `305`, `36` ou `38`
+* **Discover:** Começa com `6011`, `644` a `649`, `65`
+
+## Como Usar
+
+1.  **Salve o código:** Salve o código Python fornecido em um arquivo chamado `card_identifier.py`.
+2.  **Execute o script:** Abra um terminal ou prompt de comando, navegue até o diretório onde você salvou o arquivo e execute o comando:
+    ```bash
+    python card_identifier.py
+    ```
+3.  **Insira o número do cartão:** O programa solicitará que você digite o número do cartão de crédito. Digite-o (apenas dígitos, espaços e hífens serão removidos automaticamente) e pressione Enter.
+4.  **Veja o resultado:** O programa exibirá a bandeira do cartão identificada.
+
+## Exemplo de Uso
